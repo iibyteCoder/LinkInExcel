@@ -1,1 +1,7 @@
 /.idea/
+/log/
+/inputFile/
+/outputFile/
+/huaji.ico
+/main.py
+/requests_samples.py
