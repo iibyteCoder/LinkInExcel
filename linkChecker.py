@@ -2,8 +2,8 @@ import json
 import os
 import queue
 import re
-import time
 import sys
+import time
 from concurrent.futures import ThreadPoolExecutor, wait, ALL_COMPLETED
 
 import requests as requests
@@ -75,6 +75,13 @@ def set_configuration():
     THREAD_COUNT = config_json['THREAD_COUNT']
     tpe = BoundThreadPollExecutor(max_workers=THREAD_COUNT)
     # tpe = ThreadPoolExecutor(max_workers=THREAD_COUNT)
+
+
+def make_filedir():
+    dirs = [INPUTDIR, OUTPUTDIR, LOGDIR]
+    for dirpath in dirs:
+        if not os.path.exists(dirpath):
+            os.mkdir(dirpath)
 
 
 def get_filepath(filename_full):
@@ -253,6 +260,7 @@ def check_and_label_cells(sheet, checker, processor):
 
 def run(filename) -> str:
     set_configuration()
+    make_filedir()
     input_filepath, output_filepath, log_filepath = get_filepath(filename)
     logger.add(log_filepath, compression="zip")
     highlight_obj = get_highlight_style()
